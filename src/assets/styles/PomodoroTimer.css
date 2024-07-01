@@ -1,0 +1,101 @@
+
+body {
+  background: #181818;
+}
+
+.card {
+  padding: 30px;
+  border: 4px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #2d2a2a;
+}
+
+.tab-container {
+  display: flex;
+  justify-content: center;
+}
+
+.slider-bar {
+  display: flex;
+  position: relative;
+  width: 360px;
+  height: 50px;
+  background-color: #423f3f;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 3px solid white;
+}
+
+.slider-tab {
+  flex: 1;
+  text-align: center;
+  padding: 15px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+.slider-tab.active {
+  font-weight: bold;
+}
+
+.slider-switch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 33.33%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 30px;
+  transition: transform 0.3s ease;
+  border: 2px solid white;
+}
+
+.tabs-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-content {
+  text-align: center;
+}
+
+.time {
+  font-size: 128px;
+  margin: 20px 0;
+  color: #fff;
+  font-weight: 500;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 3px solid white;
+  border-radius: 30px;
+  cursor: pointer;
+  height: 50px;
+  width: 170px;
+  color: white;
+  background-color: #423f3f;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: inherit
+}
+
+.btn:disabled {
+  background-color: #676565;
+  color:#515050;
+  cursor: initial;
+}
+
+.btn-error {
+  background-color: #dc3545;
+  color: white;
+}
