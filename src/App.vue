@@ -5,6 +5,9 @@
         <div class="col col-sm-6 col-offset-sm-3">
           <PomodoroTimer />
         </div>
+        <div>
+          <KanbanBoard />
+        </div>
       </div>
     </div>
   </div>
@@ -12,11 +15,13 @@
 
 <script>
 import PomodoroTimer from "./components/PomodoroTimer.vue";
+import KanbanBoard from "./components/KanbanBoard.vue";
 
 export default {
   name: "App",
   components: {
     PomodoroTimer,
+    KanbanBoard
   },
 };
 </script>
@@ -28,7 +33,7 @@ export default {
 #app {
   font-family: "Work Sans", Helvetica, Arial, sans-serif;
   text-align: center;
-  color: #2c3e50;
+  color: white;
   margin-top: 60px;
 }
 
