@@ -7,6 +7,12 @@
       @dragenter.prevent
     >
       <h3>To Do</h3>
+      <div class="input-form">
+        <form @submit.prevent="addTask">
+          <input v-model="newTask" required placeholder="New Task" />
+          <button>Add</button>
+        </form>
+      </div>
       <div
         v-for="item in taskList(1)"
         :key="item.id"
@@ -76,6 +82,14 @@ export default {
       const item = this.items.find((item) => item.id == itemID);
       item.list = list;
     },
+    addTask() {
+      this.items.push({
+        id: this.id++,
+        title: this.newTask,
+        list: 1,
+      });
+      this.newTask = "";
+    },
   },
 };
 </script>
@@ -89,6 +103,32 @@ h3 {
   text-align: center;
   margin: 0;
   font-weight: 400;
+}
+
+.input-form {
+  margin: 15px 0;
+}
+
+.input-form input {
+  border: 1px solid #dddddd50;
+  border-radius: 15px 0 0 15px;
+  width: 70%;
+  padding: 10px;
+  background: #2c1b1b;
+  color: #ddd;
+}
+
+.input-form button {
+  border: 1px solid #dddddd50;
+  border-radius: 0 15px 15px 0;
+  width: 20%;
+  padding: 10px;
+  background-color: #422020;
+  color: #ddd;
+}
+
+.input-form input:focus {
+  outline: none;
 }
 
 .to-do {
