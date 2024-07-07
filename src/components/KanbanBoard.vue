@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       id: 0,
-      items: [{ id: 1, title: "Task 1", list: 1 }],
+      items: [],
     };
   },
   methods: {
