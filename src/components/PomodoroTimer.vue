@@ -31,6 +31,9 @@
             >
               Reset
             </button>
+            <button class="skip" @click="skip()">
+              <img height="50px" src="../assets/img/skip.png" />
+            </button>
           </div>
         </div>
       </div>
@@ -92,6 +95,12 @@ export default {
         (session) => session.name === sessionName
       );
       this.totalDuration = session.duration;
+    },
+    skip() {
+      const currentIndex = this.sessions.findIndex(
+        (session) => session.name === this.currentSession
+      );
+      this.changeSession(this.sessions[(currentIndex + 1) % 3].name);
     },
     changeSession(sessionName) {
       this.currentSession = sessionName;

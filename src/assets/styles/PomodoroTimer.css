@@ -99,3 +99,9 @@ body {
   background-color: #dc3545;
   color: white;
 }
+
+.skip {
+  background: inherit;
+  border: 0;
+  padding: 0;
+}
