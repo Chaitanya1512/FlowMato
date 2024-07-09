@@ -60,41 +60,39 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      id: 0,
-      items: [],
-    };
-  },
-  methods: {
-    taskList(col) {
-      return this.items.filter((item) => item.list === col);
-    },
-    dragItem(event, item) {
-      event.dataTransfer.dropEffect = "move";
-      event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("itemID", item.id);
-    },
-    dropItem(event, list) {
-      const itemID = event.dataTransfer.getData("itemID");
-      const item = this.items.find((item) => item.id == itemID);
-      item.list = list;
-    },
-    addTask() {
-      this.items.push({
-        id: this.id++,
-        title: this.newTask,
-        list: 1,
-      });
-      this.newTask = "";
-    },
-  },
-};
+<script setup>
+import { ref, reactive } from "vue";
+
+const id = ref(0);
+const newTask = ref("");
+const items = reactive([]);
+
+function taskList(list) {
+  return items.filter((item) => item.list === list);
+}
+
+function dragItem(event, item) {
+  event.dataTransfer.dropEffect = "move";
+  event.dataTransfer.effectAllowed = "move";
+  event.dataTransfer.setData("itemID", item.id);
+}
+
+function dropItem(event, list) {
+  const itemID = event.dataTransfer.getData("itemID");
+  const item = items.find((item) => item.id == itemID);
+  item.list = list;
+}
+function addTask() {
+  items.push({
+    id: id.value++,
+    title: newTask.value,
+    list: 1,
+  });
+  newTask.value = "";
+}
 </script>
 
-<style>
+<style scoped>
 .kanban-board {
   display: flex;
 }
@@ -161,5 +159,6 @@ h3 {
   margin: 10px 0;
   border: 2px solid white;
   border-radius: 15px;
+  text-align: left;
 }
 </style>
