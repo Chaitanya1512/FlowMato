@@ -8,7 +8,7 @@
           v-for="session in sessions"
           :key="session.name"
           @click="changeSession(session.name)"
-          :class="{ active: currentSession=== session.name }"
+          :class="{ active: currentSession === session.name }"
         >
           {{ session.name }}
         </div>
@@ -20,11 +20,7 @@
         <div class="card-text">
           <h1 class="time">{{ minute }}:{{ second }}</h1>
           <div class="button-group">
-            <button
-              v-if="!inProgress"
-              @click="start"
-              class="btn btn-primary"
-            >
+            <button v-if="!inProgress" @click="start" class="btn btn-primary">
               Start
             </button>
             <button v-else @click="stop" class="btn btn-error">Stop</button>
@@ -38,6 +34,7 @@
             <button class="skip" @click="skip()">
               <img height="50px" src="../assets/img/skip.png" />
             </button>
+            <!-- <div>{{ store.session }}</div> -->
           </div>
         </div>
       </div>
@@ -47,6 +44,9 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
+import { useTaskStore } from "@/stores/TaskStore";
+
+const store = useTaskStore();
 
 const sessions = reactive([
   { name: "Pomodoro", duration: 25 * 60 },
@@ -55,7 +55,7 @@ const sessions = reactive([
 ]);
 
 const totalDuration = ref(sessions[0].duration);
-const currentSession = ref("Pomodoro");
+const currentSession = ref(sessions[0].name);
 const interval = ref(null);
 const inProgress = ref(false);
 
@@ -67,10 +67,12 @@ const switchSlider = computed(() => {
     transform: `translateX(${activeIndex * 97.5}%)`,
   };
 });
+
 const minute = computed(() => {
   const minutes = Math.floor(totalDuration.value / 60);
   return minutes < 10 ? "0" + minutes : minutes;
 });
+
 const second = computed(() => {
   const seconds = totalDuration.value % 60;
   return seconds < 10 ? "0" + seconds : seconds;
@@ -80,9 +82,10 @@ function start() {
   stop();
   inProgress.value = true;
   interval.value = setInterval(() => {
-    if (--totalDuration.value <= 0) {
-      stop;
-      return;
+    if (--totalDuration.value == 0) {
+      stop();
+      skip();
+      start();
     }
   }, 1000);
 }
@@ -99,6 +102,12 @@ function reset(sessionName) {
 }
 
 function skip() {
+  if (currentSession.value === "Pomodoro") {
+    store.session++;
+    store.taskList(2).forEach(task => {
+      task.current++;
+    });
+  }
   const currentIndex = sessions.findIndex(
     (session) => session.name === currentSession.value
   );

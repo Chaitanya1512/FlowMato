@@ -14,13 +14,14 @@
         </form>
       </div>
       <div
-        v-for="item in taskList(1)"
+        v-for="item in store.taskList(1)"
         :key="item.id"
         class="drag-el"
         draggable="true"
         @dragstart="dragItem($event, item)"
       >
-        {{ item.title }}
+        <span>{{ item.title }}</span>
+        <div style="float: right;">{{ item.current }}/{{ item.est }}</div>
       </div>
     </div>
     <div
@@ -31,13 +32,14 @@
     >
       <h3>In Progress</h3>
       <div
-        v-for="item in taskList(2)"
+        v-for="item in store.taskList(2)"
         :key="item.id"
         class="drag-el"
         draggable="true"
         @dragstart="dragItem($event, item)"
       >
-        {{ item.title }}
+        <span>{{ item.title }}</span>
+        <div style="float: right;">{{ item.current }}/{{ item.est }}</div>
       </div>
     </div>
     <div
@@ -48,28 +50,27 @@
     >
       <h3>Done</h3>
       <div
-        v-for="item in taskList(3)"
+        v-for="item in store.taskList(3)"
         :key="item.id"
         class="drag-el"
         draggable="true"
         @dragstart="dragItem($event, item)"
       >
-        {{ item.title }}
+        <span>{{ item.title }}</span>
+        <div style="float: right;">{{ item.current }}/{{ item.est }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref } from "vue";
+import { useTaskStore } from "@/stores/TaskStore";
+
+const store = useTaskStore();
 
 const id = ref(0);
 const newTask = ref("");
-const items = reactive([]);
-
-function taskList(list) {
-  return items.filter((item) => item.list === list);
-}
 
 function dragItem(event, item) {
   event.dataTransfer.dropEffect = "move";
@@ -79,14 +80,17 @@ function dragItem(event, item) {
 
 function dropItem(event, list) {
   const itemID = event.dataTransfer.getData("itemID");
-  const item = items.find((item) => item.id == itemID);
+  const item = store.items.find((item) => item.id == itemID);
   item.list = list;
 }
+
 function addTask() {
-  items.push({
+  store.items.push({
     id: id.value++,
     title: newTask.value,
     list: 1,
+    current: 0,
+    est: 0
   });
   newTask.value = "";
 }
