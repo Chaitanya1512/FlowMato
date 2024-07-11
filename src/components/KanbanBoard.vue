@@ -9,7 +9,7 @@
       <h3>To Do</h3>
       <div class="input-form">
         <div @click="openDialog">new task</div>
-        <dialog ref="myDialog" class="dialog">
+        <dialog ref="dialog" class="dialog">
           <form method="dialog" @submit.prevent="handleFormSubmit">
             <div class="input">
               <input
