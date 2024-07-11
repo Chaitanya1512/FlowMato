@@ -8,10 +8,28 @@
     >
       <h3>To Do</h3>
       <div class="input-form">
-        <form @submit.prevent="addTask">
-          <input v-model="newTask" required placeholder="New Task" />
-          <button>Add</button>
-        </form>
+        <div @click="openDialog">new task</div>
+        <dialog ref="myDialog" class="dialog">
+          <form method="dialog" @submit.prevent="handleFormSubmit">
+            <div class="input">
+              <input
+                v-model="newTask"
+                required
+                placeholder="New Task"
+                autofocus
+              />
+              <input
+                v-model="estSession"
+                required
+                placeholder="Est. Sessions"
+                type="number"
+                name="quantity"
+                min="1"
+              />
+            </div>
+            <button class="close" type="submit">Submit</button>
+          </form>
+        </dialog>
       </div>
       <div
         v-for="item in store.taskList(1)"
@@ -21,7 +39,7 @@
         @dragstart="dragItem($event, item)"
       >
         <span>{{ item.title }}</span>
-        <div style="float: right;">{{ item.current }}/{{ item.est }}</div>
+        <div style="float: right">{{ item.current }}/{{ item.est }}</div>
       </div>
     </div>
     <div
@@ -39,7 +57,7 @@
         @dragstart="dragItem($event, item)"
       >
         <span>{{ item.title }}</span>
-        <div style="float: right;">{{ item.current }}/{{ item.est }}</div>
+        <div style="float: right">{{ item.current }}/{{ item.est }}</div>
       </div>
     </div>
     <div
@@ -57,7 +75,7 @@
         @dragstart="dragItem($event, item)"
       >
         <span>{{ item.title }}</span>
-        <div style="float: right;">{{ item.current }}/{{ item.est }}</div>
+        <div style="float: right">{{ item.current }}/{{ item.est }}</div>
       </div>
     </div>
   </div>
@@ -71,6 +89,17 @@ const store = useTaskStore();
 
 const id = ref(0);
 const newTask = ref("");
+const estSession = ref("");
+const dialog = ref(null);
+
+function openDialog() {
+  dialog.value.showModal();
+}
+
+function handleFormSubmit() {
+  addTask();
+  dialog.value.close();
+}
 
 function dragItem(event, item) {
   event.dataTransfer.dropEffect = "move";
@@ -90,9 +119,10 @@ function addTask() {
     title: newTask.value,
     list: 1,
     current: 0,
-    est: 0
+    est: estSession.value,
   });
   newTask.value = "";
+  estSession.value = "";
 }
 </script>
 
@@ -109,24 +139,12 @@ h3 {
 
 .input-form {
   margin: 15px 0;
-}
-
-.input-form input {
-  border: 1px solid #dddddd50;
-  border-radius: 15px 0 0 15px;
-  width: 70%;
-  padding: 10px;
+  text-align: left;
   background: #2c1b1b;
-  color: #ddd;
-}
-
-.input-form button {
-  border: 1px solid #dddddd50;
-  border-radius: 0 15px 15px 0;
-  width: 20%;
+  border: 1px solid #ddd;
   padding: 10px;
-  background-color: #422020;
-  color: #ddd;
+  border-radius: 15px;
+  cursor: pointer;
 }
 
 .input-form input:focus {
@@ -149,7 +167,7 @@ h3 {
 }
 
 .drop-zone {
-  margin: 50px 20px;
+  margin: 20px;
   width: 300px;
   min-height: 40px;
   border: 4px solid #ddd;
@@ -164,5 +182,19 @@ h3 {
   border: 2px solid white;
   border-radius: 15px;
   text-align: left;
+}
+
+::backdrop {
+  background: black;
+  opacity: 0.75;
+}
+
+.input input {
+  padding: 10px;
+}
+
+.input {
+  display: flex;
+  gap: 10px;
 }
 </style>

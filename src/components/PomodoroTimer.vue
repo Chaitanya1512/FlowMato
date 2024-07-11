@@ -20,26 +20,26 @@
         <div class="card-text">
           <h1 class="time">{{ minute }}:{{ second }}</h1>
           <div class="button-group">
+            <button
+              @click="reset(currentSession)"
+              :disabled="inProgress"
+              class="skip"
+            >
+              <img height="50px" src="../assets/img/reset.png" />
+            </button>
             <button v-if="!inProgress" @click="start" class="btn btn-primary">
               Start
             </button>
             <button v-else @click="stop" class="btn btn-error">Stop</button>
-            <button
-              @click="reset(currentSession)"
-              :disabled="inProgress"
-              class="btn"
-            >
-              Reset
-            </button>
             <button class="skip" @click="skip()">
               <img height="50px" src="../assets/img/skip.png" />
             </button>
-            <!-- <div>{{ store.session }}</div> -->
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="session">{{ store.session }}</div>
 </template>
 
 <script setup>
@@ -104,7 +104,7 @@ function reset(sessionName) {
 function skip() {
   if (currentSession.value === "Pomodoro") {
     store.session++;
-    store.taskList(2).forEach(task => {
+    store.taskList(2).forEach((task) => {
       task.current++;
     });
   }
