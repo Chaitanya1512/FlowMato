@@ -27,7 +27,7 @@
                 min="1"
               />
             </div>
-            <button class="close" type="submit">Submit</button>
+            <button class="task-submit" type="submit">Submit</button>
           </form>
         </dialog>
       </div>
@@ -125,76 +125,3 @@ function addTask() {
   estSession.value = "";
 }
 </script>
-
-<style scoped>
-.kanban-board {
-  display: flex;
-}
-
-h3 {
-  text-align: center;
-  margin: 0;
-  font-weight: 400;
-}
-
-.input-form {
-  margin: 15px 0;
-  text-align: left;
-  background: #2c1b1b;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
-.input-form input:focus {
-  outline: none;
-}
-
-.to-do {
-  background-color: #311f1f;
-  height: 100%;
-}
-
-.in-progress {
-  background-color: #312e1f;
-  height: 100%;
-}
-
-.done {
-  background-color: #1a1f18;
-  height: 100%;
-}
-
-.drop-zone {
-  margin: 20px;
-  width: 300px;
-  min-height: 40px;
-  border: 4px solid #ddd;
-  border-radius: 15px;
-  padding: 15px;
-}
-
-.drag-el {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  margin: 10px 0;
-  border: 2px solid white;
-  border-radius: 15px;
-  text-align: left;
-}
-
-::backdrop {
-  background: black;
-  opacity: 0.75;
-}
-
-.input input {
-  padding: 10px;
-}
-
-.input {
-  display: flex;
-  gap: 10px;
-}
-</style>

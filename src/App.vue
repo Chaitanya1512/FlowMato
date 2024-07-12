@@ -29,6 +29,7 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import "./assets/styles/PomodoroTimer.css";
+@import "./assets/styles/KanbanBoard.css";
 
 #app {
   font-family: "Work Sans", Helvetica, Arial, sans-serif;
