@@ -12,7 +12,7 @@ body {
 
 .tab-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .slider-bar {
@@ -103,10 +103,24 @@ body {
   background: inherit;
   border: 0;
   padding: 0;
+  cursor: pointer;
+}
+
+.skip:disabled {
+  cursor: initial;
+  -webkit-filter: grayscale(100%) opacity(50%);
+  filter: grayscale(100%) opacity(50%);
 }
 
 .session {
-  font-weight: 500;
   font-size: 24px;
-  margin: 20px;
+  width: 50px;
+  line-height: 50px;
+  background: url(../img/counter.png) no-repeat center center;
+  cursor: pointer;
+}
+
+.settings {
+  background: url(../img/settings.png) no-repeat center center;
+  width: 50px;
 }

@@ -1,6 +1,7 @@
 <template>
   <div class="card">
     <div class="tab-container">
+      <div class="session" @click="clearSession">{{ store.session }}</div>
       <div class="slider-bar">
         <div class="slider-switch" :style="switchSlider"></div>
         <div
@@ -13,6 +14,8 @@
           {{ session.name }}
         </div>
       </div>
+
+      <div class="settings"></div>
     </div>
 
     <div class="tabs-window">
@@ -39,7 +42,6 @@
       </div>
     </div>
   </div>
-  <div class="session">{{ store.session }}</div>
 </template>
 
 <script setup>
@@ -117,5 +119,9 @@ function skip() {
 function changeSession(sessionName) {
   currentSession.value = sessionName;
   reset(sessionName);
+}
+
+function clearSession() {
+  store.session = 0;
 }
 </script>
