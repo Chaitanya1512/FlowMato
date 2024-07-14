@@ -39,7 +39,15 @@
         @dragstart="dragItem($event, item)"
       >
         <span>{{ item.title }}</span>
-        <div style="float: right">{{ item.current }}/{{ item.est }}</div>
+        <div class="task-info">
+          <span>{{ item.current }}/{{ item.est }}</span>
+          <div class="edit-task" @click="editTask(item)">
+            <img id="edit" src="../assets/img/edit.png" width="20px" />
+          </div>
+          <div class="edit-task" @click="deleteTask(item.id)">
+            <img id="delete" src="../assets/img/delete.png" width="20px" />
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -57,7 +65,15 @@
         @dragstart="dragItem($event, item)"
       >
         <span>{{ item.title }}</span>
-        <div style="float: right">{{ item.current }}/{{ item.est }}</div>
+        <div class="task-info">
+          <span>{{ item.current }}/{{ item.est }}</span>
+          <div class="edit-task" @click="editTask(item)">
+            <img id="edit" src="../assets/img/edit.png" width="20px" />
+          </div>
+          <div class="edit-task" @click="deleteTask(item.id)">
+            <img id="delete" src="../assets/img/delete.png" width="20px" />
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -75,7 +91,15 @@
         @dragstart="dragItem($event, item)"
       >
         <span>{{ item.title }}</span>
-        <div style="float: right">{{ item.current }}/{{ item.est }}</div>
+        <div class="task-info">
+          <span>{{ item.current }}/{{ item.est }}</span>
+          <div class="edit-task" @click="editTask(item)">
+            <img id="edit" src="../assets/img/edit.png" width="20px" />
+          </div>
+          <div class="edit-task" @click="deleteTask(item.id)">
+            <img id="delete" src="../assets/img/delete.png" width="20px" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -91,14 +115,57 @@ const id = ref(0);
 const newTask = ref("");
 const estSession = ref("");
 const dialog = ref(null);
+const isEditing = ref(false);
+const currentTask = ref(null);
 
 function openDialog() {
   dialog.value.showModal();
 }
 
 function handleFormSubmit() {
-  addTask();
+  if (isEditing.value) {
+    updateTask();
+  } else {
+    addTask();
+  }
+  resetForm();
   dialog.value.close();
+}
+
+function addTask() {
+  store.items.push({
+    id: id.value++,
+    title: newTask.value,
+    list: 1,
+    current: 0,
+    est: estSession.value,
+  });
+}
+
+function editTask(item) {
+  isEditing.value = true;
+  currentTask.value = item;
+  newTask.value = item.title;
+  estSession.value = item.est;
+  openDialog();
+}
+
+function updateTask() {
+  const idx = getIdxById(currentTask.value.id);
+  store.items[idx].title = newTask.value;
+  store.items[idx].est = estSession.value;
+}
+
+function deleteTask(id) {
+  const idx = getIdxById(id);
+  store.items.splice(idx, 1);
+}
+
+function resetForm() {
+  newTask.value = "";
+  estSession.value = "";
+  isEditing.value = false;
+  currentTask.value = null;
 }
 
 function dragItem(event, item) {
@@ -113,15 +180,7 @@ function dropItem(event, list) {
   item.list = list;
 }
 
-function addTask() {
-  store.items.push({
-    id: id.value++,
-    title: newTask.value,
-    list: 1,
-    current: 0,
-    est: estSession.value,
-  });
-  newTask.value = "";
-  estSession.value = "";
+function getIdxById(id) {
+  return store.items.findIndex((item) => item.id == id);
 }
 </script>
