@@ -109,16 +109,23 @@ function skip() {
     store.taskList(2).forEach((task) => {
       task.current++;
     });
+    changeBreak();
+  } else {
+    changeSession(sessions[0].name);
   }
-  const currentIndex = sessions.findIndex(
-    (session) => session.name === currentSession.value
-  );
-  changeSession(sessions[(currentIndex + 1) % 3].name);
 }
 
 function changeSession(sessionName) {
   currentSession.value = sessionName;
   reset(sessionName);
+}
+
+function changeBreak() {
+  if (store.session % 4 == 0) {
+    changeSession(sessions[2].name);
+  } else {
+    changeSession(sessions[1].name);
+  }
 }
 
 function clearSession() {
