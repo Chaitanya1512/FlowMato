@@ -51,6 +51,24 @@ body {
   border: 2px solid white;
 }
 
+.timer {
+  display: flex;
+  color: white;
+  line-height: 50px;
+  justify-content: space-between;
+  margin-right:  10px;
+}
+
+.timer-input {
+  width: 60px;
+}
+
+
+#timer-input {
+  padding: 10px;
+  width: 80%;
+}
+
 .tabs-window {
   display: flex;
   flex-direction: column;

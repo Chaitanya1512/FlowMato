@@ -15,7 +15,51 @@
         </div>
       </div>
 
-      <div class="settings"></div>
+      <div class="settings" @click="openDialog">
+        <dialog ref="dialog" class="dialog">
+          <form method="dialog" @submit.prevent="changeSettings">
+            <div class="input">
+              <div class="timer">
+                <div class="timer-messsage">Pomodoro</div>
+                <div class="timer-input">
+                  <input
+                    v-model="pomodoroTimer"
+                    type="number"
+                    name="timer"
+                    min="1"
+                    id="timer-input"
+                  />
+                </div>
+              </div>
+              <div class="timer">
+                <div class="timer-messsage">Short Break</div>
+                <div class="timer-input">
+                  <input
+                    v-model="shortBreakTimer"
+                    type="number"
+                    name="timer"
+                    min="1"
+                    id="timer-input"
+                  />
+                </div>
+              </div>
+              <div class="timer">
+                <div class="timer-messsage">Long Break</div>
+                <div class="timer-input">
+                  <input
+                    v-model="longBreakTimer"
+                    type="number"
+                    name="timer"
+                    min="1"
+                    id="timer-input"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="task-submit" type="submit">Submit</button>
+          </form>
+        </dialog>
+      </div>
     </div>
 
     <div class="tabs-window">
@@ -60,6 +104,10 @@ const totalDuration = ref(sessions[0].duration);
 const currentSession = ref(sessions[0].name);
 const interval = ref(null);
 const inProgress = ref(false);
+const dialog = ref(null);
+const pomodoroTimer = ref(25);
+const shortBreakTimer = ref(5);
+const longBreakTimer = ref(15);
 
 const switchSlider = computed(() => {
   const activeIndex = sessions.findIndex(
@@ -79,6 +127,23 @@ const second = computed(() => {
   const seconds = totalDuration.value % 60;
   return seconds < 10 ? "0" + seconds : seconds;
 });
+
+function openDialog() {
+  dialog.value.showModal();
+}
+
+function changeSettings() {
+  sessions[0].duration = pomodoroTimer.value * 60;
+  sessions[1].duration = shortBreakTimer.value * 60;
+  sessions[2].duration = longBreakTimer.value * 60;
+
+  const currentIndex = sessions.findIndex(
+    (session) => session.name === currentSession.value
+  );
+  totalDuration.value = sessions[currentIndex].duration;
+
+  dialog.value.close();
+}
 
 function start() {
   stop();
