@@ -8,6 +8,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background: #2d2a2a;
+  width: 500px;
 }
 
 .tab-container {
@@ -23,7 +24,7 @@ body {
   background-color: #423f3f;
   border-radius: 30px;
   overflow: hidden;
-  border: 3px solid white;
+  border: 2px solid white;
 }
 
 .slider-tab {
@@ -48,7 +49,7 @@ body {
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 30px;
   transition: transform 0.3s ease;
-  border: 2px solid white;
+  border: 1px solid white;
 }
 
 .timer {

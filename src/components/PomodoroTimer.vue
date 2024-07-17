@@ -114,7 +114,7 @@ const switchSlider = computed(() => {
     (session) => session.name == currentSession.value
   );
   return {
-    transform: `translateX(${activeIndex * 97.5}%)`,
+    transform: `translateX(${activeIndex * 98}%)`,
   };
 });
 
