@@ -27,7 +27,16 @@
                 min="1"
               />
             </div>
-            <button class="task-submit" type="submit">Submit</button>
+            <div class="button-class">
+              <button class="task-submit" type="submit">{{isEditing? "Update" : "Submit"}}</button>
+              <button
+                v-if="isEditing"
+                class="task-submit"
+                id="delete"
+                type="button"
+                @click="deleteTask"
+              >Delete</button>
+            </div>
           </form>
         </dialog>
       </div>
@@ -43,9 +52,6 @@
           <span>{{ item.current }}/{{ item.est }}</span>
           <div class="edit-task" @click="editTask(item)">
             <img id="edit" src="../assets/img/edit.png" width="20px" />
-          </div>
-          <div class="edit-task" @click="deleteTask(item.id)">
-            <img id="delete" src="../assets/img/delete.png" width="20px" />
           </div>
         </div>
       </div>
@@ -70,9 +76,6 @@
           <div class="edit-task" @click="editTask(item)">
             <img id="edit" src="../assets/img/edit.png" width="20px" />
           </div>
-          <div class="edit-task" @click="deleteTask(item.id)">
-            <img id="delete" src="../assets/img/delete.png" width="20px" />
-          </div>
         </div>
       </div>
     </div>
@@ -95,9 +98,6 @@
           <span>{{ item.current }}/{{ item.est }}</span>
           <div class="edit-task" @click="editTask(item)">
             <img id="edit" src="../assets/img/edit.png" width="20px" />
-          </div>
-          <div class="edit-task" @click="deleteTask(item.id)">
-            <img id="delete" src="../assets/img/delete.png" width="20px" />
           </div>
         </div>
       </div>
@@ -156,9 +156,11 @@ function updateTask() {
   store.items[idx].est = estSession.value;
 }
 
-function deleteTask(id) {
-  const idx = getIdxById(id);
+function deleteTask() {
+  const idx = getIdxById(currentTask.value.id);
   store.items.splice(idx, 1);
+  dialog.value.close();
+  resetForm()
 }
 
 function resetForm() {

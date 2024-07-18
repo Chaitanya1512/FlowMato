@@ -114,3 +114,12 @@ h3 {
   float: right;
   display: flex;
 }
+
+.button-class {
+  display: flex;
+  gap: 20px;
+}
+
+#delete {
+  background-color: #dc3545;
+}
